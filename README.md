@@ -17,7 +17,7 @@ Zanim zaczniesz, upewnij się, że Twój telefon spełnia poniższe warunki:
 
 #### Krok 1: Pobierz i zainstaluj aplikację Termux
 Termux to emulator terminala, który pozwala uruchomić system Linux bezpośrednio na Androidzie. Pobierz dokładnie tę przetestowaną wersję:
-👉 **[POBIERZ TERMUX V0.118.1 (ARM64)](https://github.com/termux/termux-app/releases/download/v0.119.0-beta.3/termux-app_v0.119.0-beta.3+apt-android-7-github-debug_universal.apk)**
+👉 **[POBIERZ TERMUX V0.118.1 (ARM64)](https://github.com/termux/termux-app/releases/download/v0.118.3/termux-app_v0.118.3+github-debug_arm64-v8a.apk)**
 
 *Po pobraniu kliknij w plik `.apk`. Jeśli system Android wyświetli ostrzeżenie, wejdź w Ustawienia i wybierz "Zezwól na instalację z tego źródła".*
 
