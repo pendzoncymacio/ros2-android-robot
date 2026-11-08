@@ -22,11 +22,25 @@ Termux to emulator terminala, który pozwala uruchomić system Linux bezpośredn
 *Po pobraniu kliknij w plik `.apk`. Jeśli system Android wyświetli ostrzeżenie, wejdź w Ustawienia i wybierz "Zezwól na instalację z tego źródła".*
 
 #### Krok 2: Uruchom Interaktywny Instalator
-Otwórz zainstalowaną aplikację Termux, skopiuj poniższą komendę, wklej ją do czarnego ekranu terminala i naciśnij **Enter**:
+Otwórz zainstalowaną aplikację Termux. Aby uruchomić instalator w sposób, który pozwoli na bezproblemowe korzystanie z klawiatury ekranowej, skopiuj poniższą komendę w całości i  wklej ją do terminala , lub wpisz a potem naciśnij **Enter**:
 
 ```bash
-curl -sSL https://githubusercontent.com | bash
+curl -sSL https://raw.githubusercontent.com/pendzoncymacio/ros2-android-robot/refs/heads/main/install.sh -o install.sh && bash install.sh
 ```
+
+*Wskazówka:* Ta komenda najpierw pobiera skrypt jako plik na Twój telefon, a następnie uruchamia go lokalnie. Dzięki temu menu zatrzyma się na ekranie i będzie grzecznie czekać na Twój wybór (wpisanie cyfry od 1 do 6).
+
+---
+
+### 🏁 Jak uruchomić system po zakończeniu instalacji?
+
+Gdy instalator wyświetli komunikat o sukcesie, **zrestartuj aplikację Termux** (wpisz komendę `exit` lub zamknij aplikację z paska powiadomień Androida). 
+
+Po ponownym otwarciu Termuxa, zamiast wpisywać długie komendy Linuxa, możesz używać przygotowanych skrótów (aliasów):
+
+1. `wejdz-ros` – loguje Cię bezpośrednio do wnętrza systemu Ubuntu 24.04, gdzie zainstalowany jest ROS 2.
+2. `start-agent` – uruchamia micro-ROS Agenta, który nasłuchuje na dane z robota przez Wi-Fi (port UDP 8888).
+3. `start-foxglove` – uruchamia mostek wizualizacji (serwer dla interfejsu graficznego i wirtualnego joysticka).
 
 ---
 
