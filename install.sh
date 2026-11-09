@@ -51,7 +51,7 @@ else
     echo -e "${GREEN}[1/4] Konfiguracja zabezpieczeń i kluczy archiwum ROS 2...${NC}"
     apt update && apt install curl software-properties-common git -y
     add-apt-repository universe -y
-    curl -sSL https://githubusercontent.com -o /usr/share/keyrings/ros-archive-keyring.gpg
+    curl -sSL https://https://raw.githubusercontent.com/pendzoncymacio/ros2-android-robot/refs/heads/main/install.sh -o /usr/share/keyrings/ros-archive-keyring.gpg
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://ros.org noble main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
     
     # 2. Pobieranie właściwego systemu ROS 2 Jazzy oraz Foxglove Bridge na dysk
@@ -65,7 +65,7 @@ else
     mkdir -p ~/microros_ws/src
     cd ~/microros_ws/src
     if [ ! -d "micro-ros_setup" ]; then
-        git clone -b jazzy https://github.com
+        git clone -b jazzy https://github.com/micro-ROS/micro_ros_setup.git src/micro_ros_setup
     fi
     cd ~/microros_ws
     colcon build
