@@ -3,7 +3,6 @@
 # Kolory dla lepszej czytelności
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
-RED='\033[0;31m'
 NC='\033[0m'
 
 # ROZPOZNAWANIE ŚRODOWISKA: Sprawdzamy, czy jesteśmy w Termuxie, czy już w Ubuntu
@@ -13,31 +12,26 @@ if [ -d "$PREFIX" ] && [ ! -f /.dockerenv ]; then
     # ====================================================================
     echo -e "${BLUE}=== FAZA A: KONFIGURACJA DYSKU I KONTENERA (ANDROID) ===${NC}"
     
-    # 1. Żądanie dostępu do pamięci fizycznej telefonu
-    echo -e "${GREEN}[1/4] Sprawdzanie uprawnień do pamięci dyskowej...${NC}"
-    termux-setup-storage
-    sleep 2 # Czas na kliknięcie "Zezwól" na ekranie
+    # 1. Tworzenie trwałego katalogu w pamięci prywatnej aplikacji na dysku
+    echo -e "${GREEN}[1/3] Tworzenie stałego folderu na dysku flash...${NC}"
+    mkdir -p $HOME/ubuntu_robot
     
-    # 2. Tworzenie trwałego katalogu na dysku telefonu
-    echo -e "${GREEN}[2/4] Tworzenie stałego folderu na dysku flash...${NC}"
-    mkdir -p $HOME/storage/shared/ubuntu_robot
-    
-    # 3. Czyszczenie starych wirtualnych wpisów z pamięci RAM
-    echo -e "${GREEN}[3/4] Czyszczenie bazy kontenerów...${NC}"
+    # 2. Czyszczenie starych wirtualnych wpisów z pamięci RAM
+    echo -e "${GREEN}[2/3] Czyszczenie bazy kontenerów...${NC}"
     proot-distro remove ubuntu 2>/dev/null || true
     
-    # 4. Instalacja czystego Ubuntu bezpośrednio na dysku urządzenia
-    echo -e "${GREEN}[4/4] Instalacja Ubuntu na dysku (to zajmie chwilę)...${NC}"
-    PROOT_DISTRO_ROOTFS="$HOME/storage/shared/ubuntu_robot" proot-distro install ubuntu
+    # 3. Instalacja czystego Ubuntu bezpośrednio w trwałej pamięci aplikacji
+    echo -e "${GREEN}[3/3] Instalacja Ubuntu na dysku (to zajmie chwilę)...${NC}"
+    PROOT_DISTRO_ROOTFS="$HOME/ubuntu_robot" proot-distro install ubuntu
     
-    # 5. Aktualizacja skrótu "wejdz-ros" w Termuxie
+    # 4. Aktualizacja skrótu "wejdz-ros" w Termuxie
     sed -i '/wejdz-ros/d' ~/.bashrc 2>/dev/null || true
     sed -i '/start-agent/d' ~/.bashrc 2>/dev/null || true
     sed -i '/start-foxglove/d' ~/.bashrc 2>/dev/null || true
     
-    echo "alias wejdz-ros='PROOT_DISTRO_ROOTFS=\$HOME/storage/shared/ubuntu_robot proot-distro login ubuntu'" >> ~/.bashrc
-    echo "alias start-agent='PROOT_DISTRO_ROOTFS=\$HOME/storage/shared/ubuntu_robot proot-distro login ubuntu -- ros2 run micro_ros_agent micro_ros_agent udp4 --port 8888'" >> ~/.bashrc
-    echo "alias start-foxglove='PROOT_DISTRO_ROOTFS=\$HOME/storage/shared/ubuntu_robot proot-distro login ubuntu -- ros2 launch foxglove_bridge foxglove_bridge_launch.xml'" >> ~/.bashrc
+    echo "alias wejdz-ros='PROOT_DISTRO_ROOTFS=\$HOME/ubuntu_robot proot-distro login ubuntu'" >> ~/.bashrc
+    echo "alias start-agent='PROOT_DISTRO_ROOTFS=\$HOME/ubuntu_robot proot-distro login ubuntu -- ros2 run micro_ros_agent micro_ros_agent udp4 --port 8888'" >> ~/.bashrc
+    echo "alias start-foxglove='PROOT_DISTRO_ROOTFS=\$HOME/ubuntu_robot proot-distro login ubuntu -- ros2 launch foxglove_bridge foxglove_bridge_launch.xml'" >> ~/.bashrc
     
     echo -e "${GREEN}✓ Faza A zakończona pomyślnie! Folder na dysku został utworzony.${NC}"
     echo -e "${BLUE}Za chwilę nastąpi automatyczne zalogowanie do Ubuntu.${NC}"
@@ -45,7 +39,7 @@ if [ -d "$PREFIX" ] && [ ! -f /.dockerenv ]; then
     sleep 3
     
     # Automatyczne wejście do nowego Ubuntu
-    PROOT_DISTRO_ROOTFS="$HOME/storage/shared/ubuntu_robot" proot-distro login ubuntu
+    PROOT_DISTRO_ROOTFS="$HOME/ubuntu_robot" proot-distro login ubuntu
     
 else
     # ====================================================================
